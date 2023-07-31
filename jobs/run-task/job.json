@@ -1,0 +1,15 @@
+{
+  "schema": "1.0",
+  "key": "run-task",
+  "title": "Run my task",
+  "tasks": [
+    {
+      "name": "${account}/example-task",
+      "taskReferenceName": "task",
+      "description": "Process my data",
+      "optional": false,
+      "type": "SUB_WORKFLOW",
+      "inputParameters": {}
+    }
+  ]
+}
