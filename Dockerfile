@@ -3,8 +3,6 @@ FROM node:18-alpine
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
-RUN npm i npm@latest -g
-
 RUN mkdir /opt/node_app && chown node:node /opt/node_app
 WORKDIR /opt/node_app
 USER node
