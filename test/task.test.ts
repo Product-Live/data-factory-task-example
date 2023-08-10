@@ -1,5 +1,5 @@
 
-jest.useFakeTimers();
+jest.useFakeTimers(); // ES6 specs say imports should be hoisted. Not done currently in TS
 import {Test} from '@nestjs/testing';
 import {INestApplication} from '@nestjs/common';
 import {DatafactoryService, DataFactoryTaskResult} from '@product-live/data-factory-nest';
