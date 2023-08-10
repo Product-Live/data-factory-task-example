@@ -1,15 +1,17 @@
-import { Module } from '@nestjs/common';
-import { ScheduleModule } from '@nestjs/schedule';
-import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { TaskService } from './task/task.service';
-import { DatafactoryService } from './datafactory/datafactory.service';
-import { HealthModule } from './health/health.module';
+
+import {Module} from '@nestjs/common';
+import {DataFactoryModule} from '@product-live/data-factory-nest';
+import {WorkerModule} from './worker/worker.module';
+import {PowerTask} from './worker/power/power.task';
 
 @Module({
-  imports: [ConfigModule.forRoot(), ScheduleModule.forRoot(), HealthModule],
-  controllers: [AppController],
-  providers: [AppService, TaskService, DatafactoryService],
+    imports: [
+        WorkerModule,
+        DataFactoryModule.forRootAsync({
+            imports: [WorkerModule],
+            tasks: [PowerTask]
+        })
+    ],
+    providers: []
 })
 export class AppModule {}
