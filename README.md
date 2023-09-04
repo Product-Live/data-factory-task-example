@@ -2,6 +2,22 @@
 
 This repository contains a simple illustration of how to run a custom task in a Data Factory pipeline. For more information on how to setup a Data Factory account, please refer to our online documentation.
 
+## What is a custom task?
+
+In addition to the tasks natively managed by the Data Factory platform, you can also declare your own tasks, whose execution you can control outside our infrastructure.
+
+The possible uses are among the following:
+
+- Intensive computing
+- Functionality not available natively
+- Connection to services that are not publicly available via the Internet
+
+## Purpose of this example
+
+The sole purpose of this task is to serve as an example for future developments. It implements a task that calculates a power of 2, which is passed as a parameter to this task.
+
+For example, for input `power=10`, the result is `1024`
+
 ## Prerequisites
 
 The prerequisites to run this example are:
