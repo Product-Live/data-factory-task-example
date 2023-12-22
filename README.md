@@ -47,6 +47,7 @@ curl -X 'POST' \
   "outputKeys": []
 }'
 ```
+It will return a `task definition id`.
 
 2. Create a job using the previously created task
 
@@ -72,7 +73,9 @@ To do so, edit the sample job `run-task` provides with this repository (`jobs/ru
 
 The name of the task should match the key of the task you created in the previous step. In the example below, the name of the task is `${account}/example-task`. If you used the key 'my-task' when creating the task, the name of the task should be `${account}/my-task`. Refer to the [Data Factory documentation](https://learn.product-live.com/data-factory/tutorials/create-my-first-job/) for more information on how to create a job.
 
-3. create a `.env` and fill it with the following variables:
+You can either create the job via the [Job API](https://api.product-live.com/) or via the UI at settings.product-live.com. Either way, you should obtain a `job id`.
+
+3. Create a `.env` and fill it with the following variables:
 
 ```bash
 API_ACCESS_TOKEN=<you api access token>
@@ -87,7 +90,7 @@ npm run install
 npm run start:dev
 ```
 
-5. Run the task in your Data Factory pipeline
+5. Run the job in your Data Factory pipeline
 
 ```bash
 curl -X 'POST' \
@@ -104,7 +107,7 @@ curl -X 'POST' \
 }'
 ```
 
-6. Check the result of the task
+6. Check the result of the job execution
 
 ```bash
 curl -X 'GET' \
@@ -143,6 +146,17 @@ If the task has been handled correctly by the application running on your machin
 }
 ```
 
+### Running the task
+
+These examples use the [`Data Factory Nest` module](https://github.com/Product-Live/data-factory-nest), that hides part of the complexity of writing a custom task.
+Via our SDK, the task uses the the [Task API](https://api.product-live.com/).
+
+The task can only execute is there is an available slot in the pipeline. To check when a slot is available, the task regularly calls `data_factory/task/{task_definition_id}/poll`.
+When a slot is available, the call returns a `task instance`, which contains the input necessary to run the task. Then the task is run, the task instance is updated and sent back via a `PATCH` at `data_factory/task_executions/{task_definition_id}`.
+
+When the status of the task instance is `COMPLETED`, data factory knows to proceed with the next task in the job. The call in step 6 can be used to check the result of the job.  
+
+Apart from the API calls above, the task may also need to use the [File API](https://api.product-live.com/). 
 ## Project structure
 
 The project is structured as follows:
